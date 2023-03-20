@@ -1,21 +1,39 @@
-const { createDog } = require("../controllers/dogsController");
+const {
+  getAllDogs,
+  searchDogByName,
+  getDogById,
+  createDog,
+} = require("../controllers/dogsController");
 
-const getDogHandler = (req, res) => {
-  const { name } = req.query;
-  if (name) res.send(`Mostrando dog name ${name}`);
-  else res.send("Todos los perros");
+const getDogHandler = async (req, res) => {
+  const { breed } = req.query;
+
+  try {
+    const results = breed ? await searchDogByName(breed) : await getAllDogs();
+    res.status(200).json(results);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
-const getDogIdHandler = (req, res) => {
+const getDogIdHandler = async (req, res) => {
   const { id } = req.params;
-  res.send(`Get Dog Id ${id}`);
+
+  const source = isNaN(id) ? "bdd" : "api";
+
+  try {
+    const dog = await getDogById(id, source);
+    res.status(200).json(dog);
+  } catch (error) {
+    res.status(200).json({ error: error.message });
+  }
 };
 
 const createDogHandler = async (req, res) => {
   try {
-    const { image, name, height, weight, lifeExpectancy } = req.body;
-    const newDog = await createDog(image, name, height, weight, lifeExpectancy);
-    res.status(201).json(newDog);
+    const { image, name, height, weight, life_span } = req.body;
+    const newDog = await createDog(image, name, height, weight, life_span);
+    res.status(200).json(newDog);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

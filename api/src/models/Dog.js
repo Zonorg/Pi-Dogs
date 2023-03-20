@@ -27,9 +27,13 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      lifeExpectancy: {
+      life_span: {
         type: DataTypes.INTEGER,
         allowNull: false,
+      },
+      created: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
       },
     },
     { timestamps: false }
