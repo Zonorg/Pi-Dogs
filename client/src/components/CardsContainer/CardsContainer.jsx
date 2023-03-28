@@ -132,6 +132,7 @@ const CardsContainer = () => {
                 image={dog.image}
                 name={dog.name}
                 temperament={dog.temperament}
+                temperaments={dog.temperaments}
                 weight={dog.weight}
               />
             </div>

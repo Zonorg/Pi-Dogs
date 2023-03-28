@@ -19,15 +19,92 @@ const arrayFilter = (arr) =>
     };
   });
 
+// const getAllDogs = async () => {
+//   const databaseDogs = await Dog.findAll();
+
+//   const apiDogsRaw = (await axios.get(URL_API)).data;
+
+//   const apiDogs = arrayFilter(apiDogsRaw);
+
+//   return [...databaseDogs, ...apiDogs]; //Mostramos todo lo que hay en databaseDogs mas apiDogsRaw
+// };
+
 const getAllDogs = async () => {
-  const databaseDogs = await Dog.findAll();
+  let databaseDogs = await Dog.findAll({
+    include: {
+      model: Temperament,
+      through: {
+        attributes: [],
+      },
+    },
+  });
 
-  const apiDogsRaw = (await axios.get(URL_API)).data;
+  let apiDogs = [];
+  try {
+    const response = await axios.get(URL_API);
+    apiDogs = arrayFilter(response.data);
+  } catch (error) {
+    console.error(error);
+  }
 
-  const apiDogs = arrayFilter(apiDogsRaw);
+  let dogs = [...databaseDogs, ...apiDogs];
 
-  return [...databaseDogs, ...apiDogs]; //Mostramos todo lo que hay en databaseDogs mas apiDogsRaw
+  const dogsWithTemperament = await Promise.all(
+    dogs.map(async (dog) => {
+      if (dog.Temperament) {
+        const temperament = dog.Temperament.map((t) => t.name);
+        return {
+          ...dog,
+          temperament,
+        };
+      }
+      return dog;
+    })
+  );
+
+  return dogsWithTemperament;
 };
+
+// const getDbData = async () => {
+// 	try {
+// 		const dogs = await Dog.findAll({
+// 			include: {
+// 				model: Temperament,
+// 				through: {
+// 					attributes: [],
+// 				},
+// 			},
+// 		})
+
+// 		if (dogs.length) {
+// 			// format record like API
+// 			const dbData = await dogs.map((d) => {
+// 				const tempArray = d.temperaments.map((t) => t.name)
+// 				field = d.dataValues
+// 				data = {
+// 					id: field.id,
+// 					name: field.name,
+// 					weightMin: field.weightMin,
+// 					weightMax: field.weightMax,
+// 					heightMin: field.heightMin,
+// 					heightMax: field.heightMax,
+// 					temperament: tempArray,
+// 					lifeSpan: field.lifeSpan,
+// 					bredFor: field.bredFor,
+// 					image: field.image,
+// 					source: "DB",
+// 				}
+// 				return data
+// 			})
+// 			return dbData
+// 		} else {
+// 			return []
+// 		}
+// 	} catch (error) {
+// 		console.error("getDbData: ", error.message)
+// 		throw new Error(error.message)
+// 	}
+// }
 
 const searchDogByName = async (name) => {
   const Op = Sequelize.Op;
@@ -84,7 +161,6 @@ const createDog = async (
   life_span,
   temperament
 ) => {
-
   const dog = await Dog.create({ image, name, height, weight, life_span });
 
   const temps = temperament.split(",").map((t) => t.trim());

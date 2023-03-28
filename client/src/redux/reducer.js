@@ -88,13 +88,19 @@ export default function reducer(state = initialState, action) {
       };
 
     case FILTER_BY_ORIGIN:
-      const filteredOrigin =
-        action.payload === "dbb"
-          ? state.allDogs.filter((inst) => inst.from_DB)
-          : state.allDogs.filter((inst) => !inst.from_DB);
+      const filteredOrigin = state.allDogs.filter((dog) => {
+        if (action.payload === "All") {
+          return true;
+        } else if (action.payload === "api") {
+          return !dog.created; // Filtra los perros de la API al obtener el state created false
+        } else if (action.payload === "from_DB") {
+          return dog.created; // Filtra los perros que fueron creados en la base de datos al obtener created true
+        }
+        return true;
+      });
       return {
         ...state,
-        dogs: action.payload === "All" ? state.allDogs : filteredOrigin,
+        dogs: filteredOrigin,
       };
 
     case FILTER_BY_TEMPER:
