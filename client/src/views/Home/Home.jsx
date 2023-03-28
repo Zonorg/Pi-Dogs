@@ -1,8 +1,10 @@
+import React from "react";
 import CardsContainer from "../../components/CardsContainer/CardsContainer";
+import styles from "./Home.module.css";
+
 const Home = () => {
   return (
-    <div>
-      <h1>Esto es Home</h1>
+    <div className={styles.containerHome}>
       <CardsContainer />
     </div>
   );

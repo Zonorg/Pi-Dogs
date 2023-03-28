@@ -1,6 +1,29 @@
-.mainContainer{
-    display: flex;
-    justify-content: space-around;
-    border-radius: 15px;
-    border: 1px solid black;
+.containerNav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 20px;
+  height: 80px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
+
+.containerNav a {
+  text-decoration: none;
+  color: #444;
+  font-size: 18px;
+  margin: 0 10px;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.logo {
+  height: 80px;
+  width: auto; 
+}
+

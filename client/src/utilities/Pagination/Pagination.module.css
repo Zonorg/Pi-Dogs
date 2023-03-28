@@ -1,0 +1,42 @@
+.linksPagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.linksPagination ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.linksPagination ul li {
+  margin: 0 0.5rem;
+}
+
+.linksPagination ul li a {
+  background-color: #f5f5dc; /* beige */
+  border-radius: 50%;
+  color: #333;
+  display: block;
+  height: 2rem;
+  width: 2rem;
+  line-height: 2rem;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.linksPagination ul li a:hover {
+  background-color: #d2b48c; /* crema */
+  color: #fff;
+}
+
+.linksPagination ul li a.active {
+  background-color: #d2b48c;
+  color: #fff;
+}
+
+.pnButtons {
+  color: gray;
+}

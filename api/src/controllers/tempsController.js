@@ -1,24 +1,50 @@
 const axios = require("axios");
-const { API_KEY } = process.env;
+const { Temperament } = require("../db");
+const { URL_API } = process.env;
 
-const arrayFilter = (arr) =>
-  arr.reduce((acc, elem) => {
+//Controlador para lograr hacer un get a la api, filtrar los temperamentos, ordenarlos alfabeticamente
+//y asignarles un id incremental
+const getAllTemps = async () => {
+  const apiDogsRaw = (await axios.get(URL_API)).data;
+
+  const tempMap = new Map();
+  apiDogsRaw.forEach((elem) => {
     if (elem.temperament) {
       const temps = elem.temperament.split(",").map((temp) => temp.trim());
-      acc.push(...temps);
+      temps.forEach((temp) => {
+        if (!tempMap.has(temp)) {
+          tempMap.set(temp, tempMap.size + 1);
+        }
+      });
     }
-    return acc;
-  }, []);
+  });
 
-const getAllTemps = async () => {
-  const apiDogsRaw = (
-    await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`)
-  ).data;
+  const apiTemps = Array.from(tempMap, ([name, id]) => ({ id, name }));
 
-  const apiTemps = arrayFilter(apiDogsRaw);
+  const uniqueTemps = apiTemps.sort((a, b) => {
+    // ordenar alfabéticamente
+    const nameComparison = a.name.localeCompare(b.name);
+    if (nameComparison !== 0) {
+      return nameComparison;
+    }
+    // ordenar por id de menor a mayor
+    return a.id - b.id;
+  });
 
-  const uniqueTemps = [...new Set(apiTemps)].sort(); // Aquí se agrega el método sort()
+  // Reasignar los IDs de menor a mayor
+  let id = 1;
+  uniqueTemps.forEach((temp) => {
+    temp.id = id;
+    id++;
+  });
 
-  return { temperament: uniqueTemps };
+  return uniqueTemps;
 };
-module.exports = { getAllTemps };
+
+const saveTemperaments = async () => {
+  const temps = await getAllTemps();
+  await Temperament.bulkCreate(temps, { ignoreDuplicates: true });
+  console.log("Temperaments saved successfully!");
+};
+
+module.exports = { getAllTemps, saveTemperaments };

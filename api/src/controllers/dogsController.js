@@ -1,17 +1,20 @@
 const axios = require("axios");
 const { Dog } = require("../db");
+const { Temperament } = require("../db");
 const Sequelize = require("sequelize");
-const { API_KEY } = process.env;
+
+const { URL_API } = process.env;
 
 const arrayFilter = (arr) =>
   arr.map((elem) => {
     return {
       id: elem.id,
-      image: elem.image,
       name: elem.name,
-      height: elem.height,
-      weight: elem.weight,
+      height: elem.height.metric,
+      weight: elem.weight.metric,
+      temperament: elem.temperament,
       life_span: elem.life_span,
+      image: elem.image.url,
       created: false,
     };
   });
@@ -19,9 +22,7 @@ const arrayFilter = (arr) =>
 const getAllDogs = async () => {
   const databaseDogs = await Dog.findAll();
 
-  const apiDogsRaw = (
-    await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`)
-  ).data;
+  const apiDogsRaw = (await axios.get(URL_API)).data;
 
   const apiDogs = arrayFilter(apiDogsRaw);
 
@@ -34,9 +35,7 @@ const searchDogByName = async (name) => {
     where: { name: { [Op.iLike]: `%${name}%` } }, //Op like se usa para traer en este caso desde la bdd el nombre independientemente de mayusculas o minusculas
   });
 
-  const apiDogsRaw = (
-    await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`)
-  ).data;
+  const apiDogsRaw = (await axios.get(URL_API)).data;
 
   const apiDogs = arrayFilter(apiDogsRaw);
 
@@ -47,21 +46,60 @@ const searchDogByName = async (name) => {
   return [...filteredApi, ...databaseDogs];
 };
 
+//Busca por id en la api y en la bdd
+//Al no tener la url de la imagen en el detail de la api, se la agregamos al id
+//Si el source es numerico es igual a api, si no es igual a bdd
 const getDogById = async (id, source) => {
-  const dog =
+  const dogData =
     source === "api"
-      ? (
-          await axios.get(
-            `https://api.thedogapi.com/v1/breeds/${id}?api_key=${API_KEY}`
-          )
-        ).data
+      ? (await axios.get(`${URL_API}/${id}`)).data
       : await Dog.findByPk(id);
 
-  return dog;
+  const imageUrl =
+    source === "api"
+      ? `https://cdn2.thedogapi.com/images/${dogData.reference_image_id}.jpg`
+      : null;
+
+  const dog = {
+    id: dogData.id,
+    name: dogData.name,
+    height: dogData.height.metric,
+    temperament: dogData.temperament,
+    weight: dogData.weight.metric,
+    life_span: dogData.life_span,
+    image: imageUrl,
+  };
+  if (source === "bdd") {
+    return dogData;
+  } else {
+    return dog;
+  }
 };
 
-const createDog = async (image, name, height, weight, life_span) => {
-  await Dog.create({ image, name, height, weight, life_span });
+const createDog = async (
+  image,
+  name,
+  height,
+  weight,
+  life_span,
+  temperament
+) => {
+
+  const dog = await Dog.create({ image, name, height, weight, life_span });
+
+  const temps = temperament.split(",").map((t) => t.trim());
+
+  const tempInstances = await Promise.all(
+    temps.map((temp) => {
+      return Temperament.findAll({ where: { name: temp } });
+    })
+  ).then((results) => {
+    return results.flat();
+  });
+
+  await dog.addTemperaments(tempInstances);
+
+  return dog;
 };
 
 const deleteDog = async (id) => {

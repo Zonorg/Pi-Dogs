@@ -1,0 +1,30 @@
+.containerDetail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.h2Detail {
+  text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+}
+.backButton {
+  height: 30px;
+  width: 100px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 10px;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+}
+.containerDetail h3 {
+  max-width: 700px;
+}
+
+.imgDetail {
+  width: 700px;
+  height: 500px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+}

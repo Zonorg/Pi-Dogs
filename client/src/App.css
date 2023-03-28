@@ -1,38 +1,46 @@
-.App {
-  text-align: center;
+:root{
+  scroll-behavior: smooth;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
+  margin-top: 100px;
+  padding-bottom: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+h1 {
+  color: #333333;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+a {
+  text-decoration: none;
+  font-weight: bold;
+  display: block;
+  padding: 5px;
+  text-decoration: none;
+  color: #333;
+  cursor: pointer;
+
+  border-radius: 3px;
+  transition: all 0.2s ease-in-out;
+}
+
+img {
+  width: 250px;
+  height: 200px;
+}
+
+ul {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+li {
+  margin: 0 5px;
 }
