@@ -65,7 +65,6 @@ const getAllDogs = async () => {
   return dogsWithTemperament;
 };
 
-
 const searchDogByName = async (name) => {
   const Op = Sequelize.Op;
   const databaseDogs = await Dog.findAll({
@@ -90,7 +89,7 @@ const getDogById = async (id, source) => {
   const dogData =
     source === "api"
       ? (await axios.get(`${URL_API}/${id}`)).data
-      : await Dog.findByPk(id, {include: Temperament});
+      : await Dog.findByPk(id, { include: Temperament });
 
   const imageUrl =
     source === "api"

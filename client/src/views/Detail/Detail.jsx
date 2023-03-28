@@ -25,7 +25,7 @@ export default function Detail() {
     <div className={styles.containerDetail}>
       {dogDetail.id ? (
         <div>
-          <h2 className={styles.h2Detail}>
+          <h2>
             {dogDetail.name}{" "}
             <button className={styles.backButton} onClick={backToHome}>
               Exit
@@ -37,7 +37,7 @@ export default function Detail() {
             alt={dogDetail.name}
           />
           <h3>Id: {dogDetail.id}</h3>
-          <h3>Weight: {dogDetail.weight} kg</h3>
+          <h3>Weight (min - max): {dogDetail.weight} kg</h3>
           <h3>Height (min - max): {dogDetail.height} cm</h3>
           <h3>Life Span: {dogDetail.life_span}</h3>
           <h3>

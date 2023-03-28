@@ -3,11 +3,17 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: 1px solid #ccc;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-.h2Detail {
-  text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+.containerDetail h2 {
+  background: linear-gradient(to bottom right, #333, #666);
+  color: #fff;
+  padding: 10px;
+  border-radius: 10px;
 }
+
 .backButton {
   height: 30px;
   width: 100px;
@@ -16,10 +22,21 @@
   margin-left: 10px;
   border: none;
   border-radius: 3px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  background-color: #f1f1f1;
+  color: #333;
+  transition: background-color 0.3s ease;
 }
+
+.backButton:hover {
+  background-color: #333;
+  color: #f1f1f1;
+}
+
 .containerDetail h3 {
   max-width: 700px;
+  padding: 3px;
+  border: 1px solid #ccc;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .imgDetail {

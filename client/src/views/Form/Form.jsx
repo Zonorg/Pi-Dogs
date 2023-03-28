@@ -1,128 +1,162 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { getAllTemperaments, createDog } from "../../redux/actions";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createDog, getAllTemperaments } from "../../redux/actions";
+import styles from "./Form.module.css";
 
-const Form = ({ createDog, getAllTemperaments, temperaments }) => {
-  const [formData, setFormData] = useState({
+const Form = () => {
+  const dispatch = useDispatch();
+  // const temperaments = useSelector((state) => state.temperaments);
+
+  const [input, setInput] = useState({
     name: "",
-    weightMin: "",
-    weightMax: "",
-    heightMin: "",
-    heightMax: "",
-    life: "",
+    weight: "",
+    weight_min: "",
+    weight_max: "",
+    height: "",
+    height_min: "",
+    height_max: "",
+    life_span: "",
     image: "",
     temperament: [],
   });
 
-  const {
-    name,
-    weightMin,
-    weightMax,
-    heightMin,
-    heightMax,
-    life,
-    image,
-    temperament,
-  } = formData;
-
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  const onTemperamentChange = (e) =>
-    setFormData({
-      ...formData,
-      temperament: [...formData.temperament, e.target.value],
-    });
-
   useEffect(() => {
-    getAllTemperaments();
-  }, [getAllTemperaments]);
+    dispatch(getAllTemperaments());
+  }, [dispatch]);
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    createDog(formData);
+  const handleInputChange = function (e) {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
   };
 
+  const handleTemperamentChange = function (e) {
+    const selectedOptions = Array.from(e.target.selectedOptions).map(
+      (option) => option.value
+    );
+    setInput((prevState) => ({
+      ...prevState,
+      temperament: selectedOptions,
+    }));
+  };
+
+  const handleSubmit = function (e) {
+    e.preventDefault();
+    const newDog = {
+      name: input.name,
+      weight: input.weight,
+      weight_min: input.weight_min,
+      weight_max: input.weight_max,
+      height: input.height,
+      height_min: input.height_min,
+      height_max: input.height_max,
+      life_span: input.life_span,
+      image: input.image,
+      temperament: input.temperament,
+    };
+    dispatch(createDog(newDog));
+    setInput({
+      name: "",
+      weight: "",
+      weight_min: "",
+      weight_max: "",
+      height: "",
+      height_min: "",
+      height_max: "",
+      life_span: "",
+      image: "",
+      temperament: [],
+    });
+  };
+  const [temperament, setTemperament] = useState("all");
+
+  const temperaments = useSelector((state) =>
+    [...state.temperaments].sort(function (a, b) {
+      if (a < b) return -1;
+      else return 1;
+    })
+  );
+
+  useEffect(() => {
+    dispatch(getAllTemperaments());
+  }, [dispatch]);
+
   return (
-    <div>
-      <form onSubmit={onSubmit}>
-        <label>Name:</label>
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <label className={styles.label}>
+        Name:
         <input
           type="text"
           name="name"
-          value={name}
-          onChange={onChange}
+          value={input.name}
+          onChange={handleInputChange}
+          className={styles.input}
           required
         />
-
-        <label>Weight Range (min - max):</label>
+      </label>
+      <label className={styles.label}>
+        Weight:
         <input
           type="number"
-          name="weightMin"
-          value={weightMin}
-          onChange={onChange}
+          name="weight"
+          value={input.weight}
+          onChange={handleInputChange}
+          className={styles.input}
           required
         />
+      </label>
+      <label className={styles.label}>
+        Height:
         <input
           type="number"
-          name="weightMax"
-          value={weightMax}
-          onChange={onChange}
+          name="height"
+          value={input.height}
+          onChange={handleInputChange}
+          className={styles.input}
           required
         />
-
-        <label>Height Range (min - max):</label>
+      </label>
+      <label className={styles.label}>
+        Life span:
         <input
           type="number"
-          name="heightMin"
-          value={heightMin}
-          onChange={onChange}
+          name="life_span"
+          value={input.life_span}
+          onChange={handleInputChange}
+          className={styles.input}
           required
         />
-        <input
-          type="number"
-          name="heightMax"
-          value={heightMax}
-          onChange={onChange}
-          required
-        />
-
-        <label>Life Expectancy:</label>
+      </label>
+      <label className={styles.label}>
+        Image:
         <input
           type="text"
-          name="life"
-          value={life}
-          onChange={onChange}
-          required
-        />
-
-        <label>Image URL:</label>
-        <input
-          type="url"
           name="image"
-          value={image}
-          onChange={onChange}
+          value={input.image}
+          onChange={handleInputChange}
+          className={styles.input}
           required
         />
-
-        <label>Temperament:</label>
-        <select name="temperament" onChange={onTemperamentChange}>
-          {temperaments.map((temp) => (
-            <option key={temp} value={temp}>
-              {temp}
-            </option>
-          ))}
+      </label>
+      <label className={styles.label}>
+        Temperament:
+        <select value={temperament} onChange={handleTemperamentChange}>
+          <option value="all">Select Temperaments</option>
+          {temperaments.map((temp) => {
+            return (
+              <option value={temp} key={temp}>
+                {temp}
+              </option>
+            );
+          })}
         </select>
-
-        <button type="submit">Create Dog</button>
-      </form>
-    </div>
+      </label>
+      <button type="submit" className={styles.button}>
+        Create breed
+      </button>
+    </form>
   );
 };
 
-const mapStateToProps = (state) => ({
-  temperaments: state.temperaments.temperamentsList,
-});
-
-export default connect(mapStateToProps, { createDog, getAllTemperaments })(
-  Form
-);
+export default Form;
