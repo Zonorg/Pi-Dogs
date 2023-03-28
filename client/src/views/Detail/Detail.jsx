@@ -40,7 +40,14 @@ export default function Detail() {
           <h3>Weight: {dogDetail.weight} kg</h3>
           <h3>Height (min - max): {dogDetail.height} cm</h3>
           <h3>Life Span: {dogDetail.life_span}</h3>
-          <h3>Temperament: {dogDetail.temperament}</h3>
+          <h3>
+            Temperament:{" "}
+            {dogDetail.temperaments
+              ? dogDetail.temperaments
+                  .map((temperament) => temperament.name)
+                  .join(", ")
+              : dogDetail.temperament}
+          </h3>
         </div>
       ) : (
         <h1>Loading...</h1>

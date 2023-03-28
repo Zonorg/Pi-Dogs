@@ -65,46 +65,6 @@ const getAllDogs = async () => {
   return dogsWithTemperament;
 };
 
-// const getDbData = async () => {
-// 	try {
-// 		const dogs = await Dog.findAll({
-// 			include: {
-// 				model: Temperament,
-// 				through: {
-// 					attributes: [],
-// 				},
-// 			},
-// 		})
-
-// 		if (dogs.length) {
-// 			// format record like API
-// 			const dbData = await dogs.map((d) => {
-// 				const tempArray = d.temperaments.map((t) => t.name)
-// 				field = d.dataValues
-// 				data = {
-// 					id: field.id,
-// 					name: field.name,
-// 					weightMin: field.weightMin,
-// 					weightMax: field.weightMax,
-// 					heightMin: field.heightMin,
-// 					heightMax: field.heightMax,
-// 					temperament: tempArray,
-// 					lifeSpan: field.lifeSpan,
-// 					bredFor: field.bredFor,
-// 					image: field.image,
-// 					source: "DB",
-// 				}
-// 				return data
-// 			})
-// 			return dbData
-// 		} else {
-// 			return []
-// 		}
-// 	} catch (error) {
-// 		console.error("getDbData: ", error.message)
-// 		throw new Error(error.message)
-// 	}
-// }
 
 const searchDogByName = async (name) => {
   const Op = Sequelize.Op;
@@ -130,7 +90,7 @@ const getDogById = async (id, source) => {
   const dogData =
     source === "api"
       ? (await axios.get(`${URL_API}/${id}`)).data
-      : await Dog.findByPk(id);
+      : await Dog.findByPk(id, {include: Temperament});
 
   const imageUrl =
     source === "api"
