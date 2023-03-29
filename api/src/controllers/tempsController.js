@@ -4,6 +4,10 @@ const { URL_API } = process.env;
 
 //Controlador para lograr hacer un get a la api, filtrar los temperamentos, ordenarlos alfabeticamente
 //y asignarles un id incremental
+
+// en getAllTemps traigo todos los temperamentos de la api y los guardo en un array
+// asigno cada temperamento un id incremental y de forma alfabética
+// si el temperamento ya existe en la db, no lo guarda
 const getAllTemps = async () => {
   const apiDogsRaw = (await axios.get(URL_API)).data;
 
@@ -41,6 +45,8 @@ const getAllTemps = async () => {
   return uniqueTemps;
 };
 
+//Guarda los temperamentos en la db
+//Si el temperamento ya existe, no lo guarda
 const saveTemperaments = async () => {
   const temps = await getAllTemps();
   await Temperament.bulkCreate(temps, { ignoreDuplicates: true });

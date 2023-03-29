@@ -3,6 +3,7 @@ const {
   saveTemperaments,
 } = require("../controllers/tempsController");
 
+// get /temps
 const getTempsHandler = async (req, res) => {
   try {
     const results = await getAllTemps();

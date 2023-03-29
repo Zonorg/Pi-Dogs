@@ -19,7 +19,7 @@ export default function Detail() {
 
   useEffect(() => {
     dispatch(getDogDetail(id));
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   return (
     <div className={styles.containerDetail}>

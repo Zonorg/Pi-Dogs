@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./Card.module.css";
 
+// Componente Card que muestra la imagen, nombre, temperamento y peso de cada raza de perro
+// Si la raza tiene más de un temperamento, se muestra separado por comas
+// Si la raza tiene un solo temperamento, se muestra el nombre del temperament
 const Card = ({ image, name, temperament, weight, id, temperaments }) => {
   if (temperaments) {
     temperaments = temperaments.map((temp) => temp.name).join(", ");

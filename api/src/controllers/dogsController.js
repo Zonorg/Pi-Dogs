@@ -5,6 +5,10 @@ const Sequelize = require("sequelize");
 
 const { URL_API } = process.env;
 
+//Recibe un array de objetos que representa los perros de la API, y
+//Retorna un nuevo array de objetos con una estructura específica que será usada más adelante.
+//En este caso, se extraen sólo los datos que necesitamos, se formatean y
+//Se asignan a un nuevo objeto que contendrá los mismos datos en un formato diferente.
 const arrayFilter = (arr) =>
   arr.map((elem) => {
     return {
@@ -19,16 +23,11 @@ const arrayFilter = (arr) =>
     };
   });
 
-// const getAllDogs = async () => {
-//   const databaseDogs = await Dog.findAll();
-
-//   const apiDogsRaw = (await axios.get(URL_API)).data;
-
-//   const apiDogs = arrayFilter(apiDogsRaw);
-
-//   return [...databaseDogs, ...apiDogs]; //Mostramos todo lo que hay en databaseDogs mas apiDogsRaw
-// };
-
+//Trae todos los perros de la api y de la bdd
+//Si el perro ya existe en la bdd, se le agrega el atributo created: true
+//Si el perro no existe en la bdd, se le agrega el atributo created: false
+//Al modelo de la db se le agrega el atributo temperament, que es un array de temperamentos
+//que se obtiene de la tabla intermedia dog_temperament
 const getAllDogs = async () => {
   let databaseDogs = await Dog.findAll({
     include: {
@@ -65,11 +64,15 @@ const getAllDogs = async () => {
   return dogsWithTemperament;
 };
 
+//Busca por nombre en la api y en la bdd
 const searchDogByName = async (name) => {
   const Op = Sequelize.Op;
   const databaseDogs = await Dog.findAll({
-    where: { name: { [Op.iLike]: `%${name}%` } }, //Op like se usa para traer en este caso desde la bdd el nombre independientemente de mayusculas o minusculas
+    where: { name: { [Op.iLike]: `%${name}%` } },
   });
+  //OpiLike se usa para buscar en este caso desde la bdd el
+  //nombre independientemente de mayusculas o minusculas.
+  //Función de sequelize
 
   const apiDogsRaw = (await axios.get(URL_API)).data;
 
