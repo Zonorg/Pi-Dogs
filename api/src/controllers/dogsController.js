@@ -115,6 +115,8 @@ const getDogById = async (id, source) => {
   }
 };
 
+//Crea una nueva raza en la bdd
+//Si ya existe una raza con el mismo nombre, lanza un error
 const createDog = async (
   image,
   name,
@@ -123,6 +125,12 @@ const createDog = async (
   life_span,
   temperament
 ) => {
+  // Buscar si ya existe una raza con el mismo nombre
+  const existingDog = await Dog.findOne({ where: { name } });
+  if (existingDog) {
+    throw new Error("Breed already exist");
+  }
+
   const dog = await Dog.create({ image, name, height, weight, life_span });
 
   const temps = temperament.split(",").map((t) => t.trim());
@@ -140,18 +148,10 @@ const createDog = async (
   return dog;
 };
 
-const deleteDog = async (id) => {
-  const dog = await Dog.findByPk(id);
-  if (!dog) {
-    throw new Error(`Dog with id ${id} not found`);
-  }
-  await dog.destroy();
-};
 
 module.exports = {
   getAllDogs,
   searchDogByName,
   getDogById,
   createDog,
-  deleteDog,
 };

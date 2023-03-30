@@ -1,13 +1,14 @@
 import {
   GET_DOGS,
+  GET_ALL_TEMPS,
   GET_DOG_NAME,
+  GET_DOG_DETAIL,
   ORDER_BY_NAME,
   ORDER_BY_WEIGHT,
   FILTER_BY_ORIGIN,
-  GET_ALL_TEMPS,
   FILTER_BY_TEMPER,
-  GET_DOG_DETAIL,
   CREATE_DOG,
+  CREATE_DOG_ERROR,
 } from "./action-types";
 import axios from "axios";
 
@@ -18,59 +19,6 @@ export const getDogs = () => {
       type: GET_DOGS,
       payload: info.data,
     });
-  };
-};
-
-export const getDogByName = (name) =>{
-  return async function (dispatch) {
-    try {
-      let json = await axios.get(`http://localhost:3001/dogs?breed=${name}`);
-      return dispatch({
-        type: GET_DOG_NAME,
-        payload: json.data,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
-
-export const orderByWeight = (payload) => {
-  return {
-    type: ORDER_BY_WEIGHT,
-    payload,
-  };
-};
-
-export const filterByTemper = (payload) => {
-  return {
-    type: FILTER_BY_TEMPER,
-    payload,
-  };
-};
-
-export const getDogDetail = (id) => {
-  return async function (dispatch) {
-    let dogId = await axios(`http://localhost:3001/dogs/${id}`);
-
-    return dispatch({
-      type: GET_DOG_DETAIL,
-      payload: dogId.data,
-    });
-  };
-};
-
-export const filterByOrigin = (payload) => {
-  return {
-    type: FILTER_BY_ORIGIN,
-    payload,
-  };
-};
-
-export const orderByName = (payload) => {
-  return {
-    type: ORDER_BY_NAME,
-    payload,
   };
 };
 
@@ -85,6 +33,59 @@ export const getAllTemperaments = () => {
   };
 };
 
+export const getDogByName = (name) => {
+  return async function (dispatch) {
+    try {
+      let json = await axios.get(`http://localhost:3001/dogs?breed=${name}`);
+      return dispatch({
+        type: GET_DOG_NAME,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getDogDetail = (id) => {
+  return async function (dispatch) {
+    let dogId = await axios(`http://localhost:3001/dogs/${id}`);
+
+    return dispatch({
+      type: GET_DOG_DETAIL,
+      payload: dogId.data,
+    });
+  };
+};
+
+export const orderByName = (payload) => {
+  return {
+    type: ORDER_BY_NAME,
+    payload,
+  };
+};
+
+export const orderByWeight = (payload) => {
+  return {
+    type: ORDER_BY_WEIGHT,
+    payload,
+  };
+};
+
+export const filterByOrigin = (payload) => {
+  return {
+    type: FILTER_BY_ORIGIN,
+    payload,
+  };
+};
+
+export const filterByTemper = (payload) => {
+  return {
+    type: FILTER_BY_TEMPER,
+    payload,
+  };
+};
+
 export const createDog = (payload) => {
   return async function (dispatch) {
     try {
@@ -96,6 +97,12 @@ export const createDog = (payload) => {
       return newDog.data;
     } catch (error) {
       console.error(error);
+      const errorMessage = error.response.data;
+      dispatch({
+        type: CREATE_DOG_ERROR,
+        payload: errorMessage, // Despachamos el error
+      });
+      throw new Error(errorMessage);
     }
   };
 };

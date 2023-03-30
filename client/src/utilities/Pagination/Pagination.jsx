@@ -21,11 +21,11 @@ const Pagination = ({ dogsPerPage, dogs, pagination, currentPage }) => {
           // Botón para ir a la primera página.
           <>
             <li>
-              <a onClick={() => pagination(1)}>{"<<"}</a>
+              <button onClick={() => pagination(1)}>{"<<"}</button>
             </li>
             {/* // Botón para retroceder una página. */}
             <li>
-              <a onClick={() => pagination(currentPage - 1)}>{"<"}</a>
+              <button onClick={() => pagination(currentPage - 1)}>{"<"}</button>
             </li>
           </>
         )}
@@ -34,23 +34,23 @@ const Pagination = ({ dogsPerPage, dogs, pagination, currentPage }) => {
             .filter((num) => num >= minPage && num <= maxPage)
             .map((num) => (
               <li key={num}>
-                <a
+                <button
                   onClick={() => pagination(num)}
                   className={currentPage === num ? styles.active : null}
                 >
                   {num}
-                </a>
+                </button>
               </li>
             ))}
         {currentPage < pages.length && (
           // Botón para avanzar una página.
           <>
             <li>
-              <a onClick={() => pagination(currentPage + 1)}>{">"}</a>
+              <button onClick={() => pagination(currentPage + 1)}>{">"}</button>
             </li>
-            {/* // Botón para ir a la última página. */}
+            {/* // Botón para ir button la última página. */}
             <li>
-              <a onClick={() => pagination(pages.length)}>{">>"}</a>
+              <button onClick={() => pagination(pages.length)}>{">>"}</button>
             </li>
           </>
         )}

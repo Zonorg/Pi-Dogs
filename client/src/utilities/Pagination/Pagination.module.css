@@ -14,8 +14,8 @@
   margin: 0 0.5rem;
 }
 
-.linksPagination ul li a {
-  background-color: #f5f5dc; /* beige */
+.linksPagination ul li button {
+  background-color: #f5f5dc;
   border-radius: 50%;
   color: #333;
   display: block;
@@ -25,14 +25,16 @@
   text-align: center;
   text-decoration: none;
   transition: all 0.2s ease;
+  border: none; 
 }
 
-.linksPagination ul li a:hover {
-  background-color: #d2b48c; /* crema */
+.linksPagination ul li button:hover {
+  background-color: #d2b48c; 
   color: #fff;
+  cursor: pointer; 
 }
 
-.linksPagination ul li a.active {
+.linksPagination ul li button.active {
   background-color: #d2b48c;
   color: #fff;
 }

@@ -1,11 +1,15 @@
+.imgForm{
+  height: 50px;
+  width: auto;
+}
+
 .form {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1rem;
-  width: 100%;
-  padding: 20px;
-  max-width: 500px;
+  max-width: 700px;
   margin: 150px auto;
+  padding: 20px;
   border: 1px solid black;
   border-radius: 10px;
   box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.4);
@@ -13,25 +17,34 @@
 
 .form h3 {
   font-weight: lighter;
+  align-self: center;
+  justify-self: center;
 }
 
-.label {
-  display: flex;
-  flex-direction: column;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-.input {
+.form .label {
+  display: block;
+  font-weight: 400;
   padding: 0.5rem;
-  border: none;
+  border-radius: 0.25rem;
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.25);
+  background-color: white;
+
+}
+
+.form input {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 5px;
   border-radius: 0.25rem;
   box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.25);
   font-size: 1rem;
 }
 
-.button {
+.form .button {
+  display: inline-block;
   padding: 0.5rem 1rem;
+  height: 50px;
   background-color: #4caf50;
   color: white;
   border: none;
@@ -40,13 +53,15 @@
   transition: background-color 0.25s ease-in-out;
 }
 
-.button:hover {
+.form .button:hover {
   background-color: #3e8e41;
 }
 
 .form select {
+  display: block;
+  width: 100%;
+  border: 2px solid black;
   padding: 0.5rem;
-  border: none;
   border-radius: 0.25rem;
   box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.25);
   font-size: 1rem;
@@ -54,6 +69,14 @@
   background-color: white;
 }
 
-.error{
+.form .error {
   color: red;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.tempsSelected {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4caf50;
 }

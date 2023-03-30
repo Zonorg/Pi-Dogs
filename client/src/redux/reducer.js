@@ -8,6 +8,7 @@ import {
   FILTER_BY_TEMPER,
   GET_DOG_DETAIL,
   CREATE_DOG,
+  CREATE_DOG_ERROR,
 } from "./action-types";
 
 const initialState = {
@@ -15,17 +16,22 @@ const initialState = {
   dogDetail: {},
   temperaments: [],
   allDogs: [],
+  error: null, // Agrego una propiedad para almacenar los errores
 };
 
 export default function reducer(state = initialState, action) {
-  let aux = [];
-
   switch (action.type) {
     case GET_DOGS:
       return {
         ...state,
         dogs: action.payload,
         allDogs: action.payload,
+      };
+
+    case GET_ALL_TEMPS:
+      return {
+        ...state,
+        temperaments: action.payload,
       };
 
     case GET_DOG_NAME:
@@ -81,12 +87,6 @@ export default function reducer(state = initialState, action) {
         orderBy: orderBy, // Actualizar la dirección de ordenamiento actual
       };
 
-    case GET_ALL_TEMPS:
-      return {
-        ...state,
-        temperaments: action.payload,
-      };
-
     case FILTER_BY_ORIGIN:
       const filteredOrigin = state.allDogs.filter((dog) => {
         if (action.payload === "All") {
@@ -120,6 +120,12 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         dogDetail: action.payload,
+        error: null, // Resetear cualquier error previo
+      };
+    case CREATE_DOG_ERROR:
+      return {
+        ...state,
+        error: action.payload,
       };
     default:
       return state;

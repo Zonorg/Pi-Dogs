@@ -1,10 +1,10 @@
 export const GET_DOGS = "GET_DOGS";
-export const GET_DOG_NAME = "GET_DOG_NAME";
-export const ORDER_BY_NAME = "ORDER_BY_NAME";
-export const FILTER_BY_ORIGIN = "FILTER_BY_ORIGIN";
-export const ORDER_BY_WEIGHT = "ORDER_BY_WEIGHT";
 export const GET_ALL_TEMPS = "GET_ALL_TEMPS";
-export const FILTER_BY_TEMPER = "FILTER_BY_TEMPER";
+export const GET_DOG_NAME = "GET_DOG_NAME";
 export const GET_DOG_DETAIL = "GET_DOG_DETAIL";
+export const ORDER_BY_NAME = "ORDER_BY_NAME";
+export const ORDER_BY_WEIGHT = "ORDER_BY_WEIGHT";
+export const FILTER_BY_ORIGIN = "FILTER_BY_ORIGIN";
+export const FILTER_BY_TEMPER = "FILTER_BY_TEMPER";
 export const CREATE_DOG = "CREATE_DOG";
-export const ORDER = "ORDER"
+export const CREATE_DOG_ERROR = "CREATE_DOG_ERROR";

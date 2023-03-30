@@ -10,7 +10,6 @@ export default function Detail() {
   let { id } = useParams();
 
   const dogDetail = useSelector((state) => state.dogDetail);
-  console.log(dogDetail);
 
   const navigate = useNavigate();
   function backToHome() {
