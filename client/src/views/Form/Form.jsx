@@ -10,12 +10,7 @@ const Form = () => {
   const [errors, setErrors] = useState({});
   const [setErrorMessage] = useState("");
 
-  const temperaments = useSelector((state) =>
-    [...state.temperaments].sort(function (a, b) {
-      if (a < b) return -1;
-      else return 1;
-    })
-  );
+  const temperaments = useSelector((state) => state.temperaments);
 
   const [input, setInput] = useState({
     name: "",
@@ -137,20 +132,7 @@ const Form = () => {
           <p className={styles.error}>{errors.height_min}</p>
         )}
       </label>
-      <label className={styles.label}>
-        Weight (min):
-        <input
-          type="number"
-          name="weight_min"
-          value={input.weight_min}
-          onChange={handleInputChange}
-          className={styles.input}
-          placeholder="Insert minimum weight"
-        />
-        {errors.weight_min && (
-          <p className={styles.error}>{errors.weight_min}</p>
-        )}
-      </label>
+
       <label className={styles.label}>
         Height (max):
         <input
@@ -165,6 +147,22 @@ const Form = () => {
           <p className={styles.error}>{errors.height_max}</p>
         )}
       </label>
+
+      <label className={styles.label}>
+        Weight (min):
+        <input
+          type="number"
+          name="weight_min"
+          value={input.weight_min}
+          onChange={handleInputChange}
+          className={styles.input}
+          placeholder="Insert minimum weight"
+        />
+        {errors.weight_min && (
+          <p className={styles.error}>{errors.weight_min}</p>
+        )}
+      </label>
+
       <label className={styles.label}>
         Weight (max):
         <input
@@ -193,6 +191,22 @@ const Form = () => {
           <p className={styles.error}>{errors.life_span_min}</p>
         )}
       </label>
+
+      <label className={styles.label}>
+        Life Span (max):
+        <input
+          type="number"
+          name="life_span_max"
+          value={input.life_span_max}
+          onChange={handleInputChange}
+          className={styles.input}
+          placeholder="Insert maximum life span"
+        />
+        {errors.life_span_max && (
+          <p className={styles.error}>{errors.life_span_max}</p>
+        )}
+      </label>
+
       <label className={styles.label}>
         Select Temperaments:
         <select
@@ -209,20 +223,7 @@ const Form = () => {
           })}
         </select>
       </label>
-      <label className={styles.label}>
-        Life Span (max):
-        <input
-          type="number"
-          name="life_span_max"
-          value={input.life_span_max}
-          onChange={handleInputChange}
-          className={styles.input}
-          placeholder="Insert maximum life span"
-        />
-        {errors.life_span_max && (
-          <p className={styles.error}>{errors.life_span_max}</p>
-        )}
-      </label>
+
       <label className={styles.label}>
         <p className={styles.tempsSelected}>
           {input.temperament ? input.temperament : "No temperament selected"}
@@ -231,6 +232,7 @@ const Form = () => {
           <p className={styles.error}>{errors.temperament}</p>
         )}
       </label>
+
       <button type="submit" className={styles.button}>
         Create breed
       </button>

@@ -9,12 +9,13 @@ import {
   FILTER_BY_TEMPER,
   CREATE_DOG,
   CREATE_DOG_ERROR,
+  SET_CURRENT_PAGE,
 } from "./action-types";
 import axios from "axios";
 
 export const getDogs = () => {
   return async function (dispatch) {
-    const info = await axios("http://localhost:3001/dogs");
+    const info = await axios.get("http://localhost:3001/dogs");
     info.data.forEach((dog) => {
       if (dog.temperaments) {
         const tempParse = dog.temperaments.map((t) => t.name).join(", ");
@@ -111,5 +112,12 @@ export const createDog = (payload) => {
       });
       throw new Error(errorMessage);
     }
+  };
+};
+
+export const setCurrentPage = (page) => {
+  return {
+    type: SET_CURRENT_PAGE,
+    payload: page,
   };
 };

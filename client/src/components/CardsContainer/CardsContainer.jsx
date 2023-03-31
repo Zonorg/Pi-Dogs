@@ -47,19 +47,23 @@ const CardsContainer = () => {
 
   const handleOrderName = (event) => {
     dispatch(orderByName(event.target.value));
+    setCurrentPage(1);
   };
 
   const handleOrderWeight = (event) => {
     dispatch(orderByWeight(event.target.value));
+    setCurrentPage(1)
   };
 
   const handleFilterByOrigin = (event) => {
     dispatch(filterByOrigin(event.target.value));
+    setCurrentPage(1);
   };
 
   const handleFilterByTemperament = (event) => {
     setTemperament(event.target.value);
     dispatch(filterByTemper(event.target.value));
+    setCurrentPage(1);
   };
 
   return (

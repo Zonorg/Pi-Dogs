@@ -131,7 +131,7 @@ const createDog = async (
     throw new Error("Breed already exist");
   }
 
-  const dog = await Dog.create({ image, name, height, weight, life_span });
+  const dog = await Dog.create({ image, name, height, weight, life_span, temperament });
 
   const temps = temperament.split(",").map((t) => t.trim());
 

@@ -8,3 +8,4 @@ export const FILTER_BY_ORIGIN = "FILTER_BY_ORIGIN";
 export const FILTER_BY_TEMPER = "FILTER_BY_TEMPER";
 export const CREATE_DOG = "CREATE_DOG";
 export const CREATE_DOG_ERROR = "CREATE_DOG_ERROR";
+export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
