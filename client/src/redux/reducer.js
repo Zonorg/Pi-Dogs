@@ -7,17 +7,16 @@ import {
   GET_ALL_TEMPS,
   FILTER_BY_TEMPER,
   GET_DOG_DETAIL,
+  CLEAR_DOG_DETAIL,
   CREATE_DOG,
   CREATE_DOG_ERROR,
-  SET_CURRENT_PAGE,
 } from "./action-types";
 
 const initialState = {
+  allDogs: [],
   dogs: [],
   dogDetail: {},
   temperaments: [],
-  allDogs: [],
-  currentPage: 1,
   error: null, // Agrego una propiedad para almacenar los errores
 };
 
@@ -46,6 +45,12 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         dogDetail: action.payload,
+      };
+
+    case CLEAR_DOG_DETAIL:
+      return {
+        ...state,
+        dogDetail: {},
       };
 
     case ORDER_BY_NAME:
@@ -129,11 +134,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         error: action.payload,
       };
-    case SET_CURRENT_PAGE:
-      return {
-        ...state,
-        currentPage: action.payload,
-      };
+
     default:
       return state;
   }

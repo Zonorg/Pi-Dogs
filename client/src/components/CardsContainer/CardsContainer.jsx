@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  filterByOrigin,
   getDogs,
+  getAllTemperaments,
   orderByName,
   orderByWeight,
+  filterByOrigin,
   filterByTemper,
-  getAllTemperaments,
+  getDogByName,
 } from "../../redux/actions";
 import Card from "../Card/Card";
 import Pagination from "../../utilities/Pagination/Pagination";
@@ -16,7 +17,11 @@ const CardsContainer = () => {
   //Conectamos con el store y obtenemos el estado global.
   const dispatch = useDispatch();
   const dogs = useSelector((state) => state.dogs);
+  const temperaments = useSelector((state) => [...state.temperaments]);
+
   const [temperament, setTemperament] = useState("all");
+
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
   const [dogsPerPage] = useState(8);
@@ -29,12 +34,17 @@ const CardsContainer = () => {
     setCurrentPage(page);
   };
 
-  const temperaments = useSelector((state) => [...state.temperaments]);
-
   useEffect(() => {
     dispatch(getDogs());
     dispatch(getAllTemperaments());
   }, [dispatch]);
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    setSearchTerm(value);
+    dispatch(getDogByName(value));
+    setCurrentPage(1);
+  };
 
   const handleFilter = (event) => {
     const value = event.target.value;
@@ -52,7 +62,7 @@ const CardsContainer = () => {
 
   const handleOrderWeight = (event) => {
     dispatch(orderByWeight(event.target.value));
-    setCurrentPage(1)
+    setCurrentPage(1);
   };
 
   const handleFilterByOrigin = (event) => {
@@ -108,6 +118,12 @@ const CardsContainer = () => {
             );
           })}
         </select>
+        <input 
+        className={styles.containerSearch}
+          placeholder="Search Breed"
+          value={searchTerm}
+          onChange={handleInputChange}
+        />
       </section>
       <div className={styles.cardsContainer}>
         {currentDogs?.map((dog) => {

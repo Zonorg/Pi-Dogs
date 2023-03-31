@@ -1,5 +1,5 @@
 import React from "react";
-import { getDogDetail } from "../../redux/actions";
+import { getDogDetail, clearDogDetail } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -13,6 +13,7 @@ export default function Detail() {
 
   const navigate = useNavigate();
   function backToHome() {
+    dispatch(clearDogDetail());
     navigate("/home");
   }
 

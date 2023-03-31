@@ -3,13 +3,13 @@ import {
   GET_ALL_TEMPS,
   GET_DOG_NAME,
   GET_DOG_DETAIL,
+  CLEAR_DOG_DETAIL,
   ORDER_BY_NAME,
   ORDER_BY_WEIGHT,
   FILTER_BY_ORIGIN,
   FILTER_BY_TEMPER,
   CREATE_DOG,
   CREATE_DOG_ERROR,
-  SET_CURRENT_PAGE,
 } from "./action-types";
 import axios from "axios";
 
@@ -66,6 +66,12 @@ export const getDogDetail = (id) => {
   };
 };
 
+export const clearDogDetail = () => {
+  return {
+    type: CLEAR_DOG_DETAIL,
+  };
+};
+
 export const orderByName = (payload) => {
   return {
     type: ORDER_BY_NAME,
@@ -108,16 +114,10 @@ export const createDog = (payload) => {
       const errorMessage = error.response.data;
       dispatch({
         type: CREATE_DOG_ERROR,
-        payload: errorMessage, // Despachamos el error
+        payload: errorMessage,
       });
       throw new Error(errorMessage);
     }
   };
 };
 
-export const setCurrentPage = (page) => {
-  return {
-    type: SET_CURRENT_PAGE,
-    payload: page,
-  };
-};
