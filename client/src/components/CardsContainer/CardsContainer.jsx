@@ -118,13 +118,14 @@ const CardsContainer = () => {
             );
           })}
         </select>
-        <input 
-        className={styles.containerSearch}
+        <input
+          className={styles.containerSearch}
           placeholder="Search Breed"
           value={searchTerm}
           onChange={handleInputChange}
         />
       </section>
+
       <div className={styles.cardsContainer}>
         {currentDogs?.map((dog) => {
           return (
