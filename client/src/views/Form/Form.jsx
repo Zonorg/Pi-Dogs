@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createDog, getAllTemperaments } from "../../redux/actions";
 import { validateInput } from "./Validate";
-import golden from "./golden.png"
+import golden from "./golden.png";
 import styles from "./Form.module.css";
 
 const Form = () => {
@@ -87,7 +87,9 @@ const Form = () => {
         temperament: "",
       });
       setErrors({});
+      alert("Dog created successfully!");
     } catch (error) {
+      alert("Breed name already exists");
       setErrorMessage(error.response.data.message);
     }
   };

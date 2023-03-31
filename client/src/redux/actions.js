@@ -15,6 +15,13 @@ import axios from "axios";
 export const getDogs = () => {
   return async function (dispatch) {
     const info = await axios("http://localhost:3001/dogs");
+    info.data.forEach((dog) => {
+      if (dog.temperaments) {
+        const tempParse = dog.temperaments.map((t) => t.name).join(", ");
+        dog.temperament = tempParse;
+        delete dog.temperaments;
+      }
+    });
     return dispatch({
       type: GET_DOGS,
       payload: info.data,
