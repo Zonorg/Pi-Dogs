@@ -1,13 +1,11 @@
-:root{
+:root {
   scroll-behavior: smooth;
 }
 
 body {
   padding: 0;
   margin: 0;
-  font-family: "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
-    "Droid Sans", "Helvetica Neue", sans-serif;
-  margin-top: 100px;
+  font-family: "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   padding-bottom: 20px;
 }
 

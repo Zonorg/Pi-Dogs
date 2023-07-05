@@ -7,13 +7,9 @@ const NavBar = () => {
   return (
     <div className={styles.containerNav}>
       <Link to="/home">
-        <img
-          className={styles.logo}
-          src={logo}
-          alt="Logo"
-          onClick={() => window.scrollTo(0, 0)}
-        />
+        <img className={styles.logo} src={logo} alt="Logo" onClick={() => window.scrollTo(0, 0)} />
       </Link>
+      <Link to="/">HOME</Link>
       <Link to="/create" onClick={() => window.scrollTo(0, 0)}>
         CREATE DOG
       </Link>

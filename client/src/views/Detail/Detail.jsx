@@ -31,23 +31,19 @@ export default function Detail() {
               Exit
             </button>
           </h2>
-          <img
-            className={styles.imgDetail}
-            src={dogDetail.image}
-            alt={dogDetail.name}
-          />
+          <img className={styles.imgDetail} src={dogDetail.image} alt={dogDetail.name} />
+          <div className={styles.details}>
           <h3>Id: {dogDetail.id}</h3>
-          <h3>Weight (min - max): {dogDetail.weight} kg</h3>
-          <h3>Height (min - max): {dogDetail.height} cm</h3>
-          <h3>Life Span: {dogDetail.life_span}</h3>
-          <h3>
-            Temperament:{" "}
-            {dogDetail.temperaments
-              ? dogDetail.temperaments
-                  .map((temperament) => temperament.name)
-                  .join(", ")
-              : dogDetail.temperament}
-          </h3>
+            <h3>Weight (min - max): {dogDetail.weight} kg</h3>
+            <h3>Height (min - max): {dogDetail.height} cm</h3>
+            <h3>Life Span: {dogDetail.life_span}</h3>
+            <h3>
+              Temperament:{" "}
+              {dogDetail.temperaments
+                ? dogDetail.temperaments.map((temperament) => temperament.name).join(", ")
+                : dogDetail.temperament}
+            </h3>
+          </div>
         </div>
       ) : (
         <h1>Loading...</h1>
